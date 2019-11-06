@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"bufio"
-	"github.com/sherlockhua/goproject/day9/proto"
+	"goproject/day9/proto"
 	"net"
 )
 
@@ -18,7 +18,6 @@ func main(){
 		return
 	}
 
-	fmt.Fprintf
 	recvMsg = make(chan interface{}, 1000)
 	defer conn.Close()
 	go read(conn)

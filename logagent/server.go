@@ -11,7 +11,8 @@ import (
 )
 
 var waitGroup sync.WaitGroup
-
+//可以收集多个日志,新建一个结构
+//一个tail挂了,需要记录偏移量,下次启动再接着收集,每个tail一个偏移量 offset
 type TailObj struct {
 	tail     *tail.Tail
 	secLimit *SecondLimit
@@ -24,8 +25,9 @@ type TailObj struct {
 	logConf  LogConfig
 	exitChan chan bool
 }
-
+//保存所有的tail实例
 type TailMgr struct {
+	//使用map可以检测重复,如果重复就不管,很好的去重
 	tailObjMap map[string]*TailObj
 	lock       sync.Mutex
 }
@@ -37,23 +39,25 @@ func NewTailMgr() *TailMgr {
 		tailObjMap: make(map[string]*TailObj, 16),
 	}
 }
-
+//如果配置文件是动态的,随时更改,就需要加锁
 func (t *TailMgr) AddLogFile(conf LogConfig) (err error) {
 	t.lock.Lock()
 	defer t.lock.Unlock()
-
+	//如果存在,就不添加 避免重复收集
 	_, ok := t.tailObjMap[conf.LogPath]
 	if ok {
 		err = fmt.Errorf("duplicate filename:%s", conf.LogPath)
 		return
 	}
-
+	//如果不存在,就初始化一个tail实例
+	//location参数作用:当程序奔溃了,重新tailf读取数据的时候就会用到,否则每次都是从头读取,当程序挂了,会写入
+	//kafka两遍,对于日志分析来说,这个日志其实就乱了,而且也浪费资源
 	tail, err := tail.TailFile(conf.LogPath, tail.Config{
-		ReOpen:    true,
+		ReOpen:    true, //重新打开
 		Follow:    true,
-		Location:  &tail.SeekInfo{Offset: 0, Whence: 2},
+		Location:  &tail.SeekInfo{Offset: 0, Whence: 2}, //从哪个位置读取
 		MustExist: false,
-		Poll:      true,
+		Poll:      true,//轮循查询
 	})
 
 	tailObj := &TailObj{

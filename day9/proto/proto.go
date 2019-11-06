@@ -80,7 +80,7 @@ func ReadPacket(conn net.Conn) (body []byte, cmd int32, err error) {
 	}
 
 	fmt.Printf("read cmd succ:%d\n", cmd)
-	var buf []byte = make([]byte, length)
+	var buf  = make([]byte, length)
 	_, err = io.ReadFull(conn, buf)
 	if err != nil {
 		fmt.Printf("read body from conn %v failed, err:%v\n", conn, err)

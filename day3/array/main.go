@@ -8,17 +8,6 @@ import(
 	//"strings"
 )
 
-func test1() {
-	var a [25]int8
-	length := len(a)
-	for i := 0; i < length; i++ {
-		fmt.Printf("%p\n", &a[i])
-	}
-	
-	for index, _ := range a {
-		fmt.Printf("a[%d]=%d\n", index, a[index])
-	}
-}
 
 func test2() {
 	var a [5]int = [5]int {1,2,3,4,5}

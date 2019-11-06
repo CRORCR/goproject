@@ -6,8 +6,6 @@ import (
 	//"strconv"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-	"github.com/sherlockhua/goproject/seckill/proxy/model"
-	"github.com/sherlockhua/goproject/seckill/common"
 	"fmt"
 	"time"
 )
@@ -38,7 +36,7 @@ func (p *ProxyController) SecKill() {
 		logs.Error("invalid product id:%d", productId)
 		return
 	}
-	userId, err := p.GetInt64("user_id", 0)
+	userId, err := p.GetInt("user_id", 0)
 	if err != nil || userId == 0 {
 		m = p.pack(1001, fmt.Sprintf("invalid useId:%d", userId), nil)
 		logs.Error("invalid useId :%d", userId)
@@ -115,7 +113,7 @@ func (p *ProxyController) SecInfo() {
 		} else {
 			activityStatus.Status = common.ActivityStart
 		}
-	} 
+	}
 
 	if now < data.StartTime {
 		activityStatus.Status = common.ActivityNotStart

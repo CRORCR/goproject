@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"encoding/json"
 	"github.com/astaxie/beego"
-	 "github.com/sherlockhua/goproject/short_url/logic"
+	 "goproject/short_url/logic"
 	"github.com/sherlockhua/goproject/short_url/model"
 )
 

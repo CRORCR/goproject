@@ -116,6 +116,7 @@ func (s *SecProxyData) GetRequest(userId int64, productId int) (req* common.SecK
 	return
 }
 
+//谁调用的
 func (s *SecProxyData) AddRequest(req *common.SecKillRequest) (err error) {
 	
 	timer := time.NewTicker(2*time.Second)
@@ -136,7 +137,6 @@ func (s *SecProxyData) AddRequest(req *common.SecKillRequest) (err error) {
 		err = ErrAlreadySaleout
 		return
 	}
-
 	key := s.getKey(req.UserId, req.ProductId)
 
 	s.userMapLock.Lock()

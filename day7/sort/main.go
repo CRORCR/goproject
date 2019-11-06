@@ -5,6 +5,7 @@ import (
 	//"sort"
 	"math/rand"
 	"fmt"
+	"sort"
 )
 
 type Student struct {
@@ -38,7 +39,7 @@ func main() {
 		studentArr = append(studentArr, s)
 	}
 	
-	//sort.Sort(studentArr)
+	sort.Sort(studentArr)
 	bubble_sort(studentArr)
 	for i := 0; i < len(studentArr); i++{
 		fmt.Printf("%#v\n", studentArr[i])

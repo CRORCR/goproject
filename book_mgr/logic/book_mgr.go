@@ -69,7 +69,7 @@ func (b *BookMgr) SearchByAuthor(Author string) (bookList []*Book) {
 }
 
 func (b *BookMgr) SearchByPushlish(min time.Time, max time.Time) (bookList []*Book) {
-	sql := fmt.Sprintf("select book_id, name, author, num, publish_time from book where publish_time > ? and publish_time < ?", 
+	sql := fmt.Sprintf("select book_id, name, author, num, publish_time from book where publish_time > ? and publish_time < ?",
 		min, max)
 	Db.Select(&bookList, sql)
 	return
@@ -92,7 +92,7 @@ func (b *BookMgr) save() {
 func (b *BookMgr) Borrow(student *Student, bookId string) (err error) {
 	b.lock.Lock()
 	defer b.lock.Unlock()
-	
+
 	var book *Book
 	for _, v := range b.BookList {
 		if v.BookId == bookId {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"time"
-	
+
 	"fmt"
 	"sync/atomic"
 	"github.com/sherlockhua/goproject/config"

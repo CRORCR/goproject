@@ -15,6 +15,5 @@ func main() {
 			waitGroup.Done()
 		}(i)
 	}
-	
 	waitGroup.Wait()
 }
