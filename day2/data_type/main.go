@@ -2,36 +2,52 @@ package main
 
 import(
 	"fmt"
-	//"code.oldboy.com/day1/calc"
-	"time"
 )
 
-func int_test() {
-	var num int8 = 16
-	var num3 int
-	var num4 int32
-	var b bool = false
-	fmt.Printf("%d %t\n", num, b)
-
-	num3 = int(num4)
-	fmt.Printf("%d\n", num3)
-
-	num3 = num3 + int(num4)
-	fmt.Printf("%%%d\n", num3)
-
-	fmt.Printf("%T\n", num)
-}
-
-func Test() int{
-	return 9
-}
 
 func main() {
-	//result := calc.Add(2, 3)
-	//fmt.Println(result)
-	//weibo_test()
-	//binary_test()
-	//int_test()
-	Test()
-	time.Sleep(time.Second*100)
+	weibo_test()
+}
+
+const (
+	HongMing = 1 << 0
+	DaRen = 1 << 1
+	Vip = 1 << 2
+)
+
+type User struct {
+	name string
+	flag uint8
+}
+
+func set_flag(user User, isSet bool, flag uint8) User {
+	if isSet == true {
+		user.flag = user.flag | flag
+	} else {
+		user.flag = user.flag ^ flag
+	}
+	return user
+}
+
+
+func is_set_flag(user User, flag uint8) bool {
+	result := user.flag & flag
+	return result == 1
+}
+
+func weibo_test() {
+	var user User
+	user.name = "test01"
+	user.flag = 0
+
+	result := is_set_flag(user, HongMing)
+	fmt.Printf("user is hongming:%t\n", result)
+
+	user = set_flag(user, true, HongMing)
+	result = is_set_flag(user, HongMing)
+	fmt.Printf("user is hongming:%t\n", result)
+
+	user = set_flag(user, false,HongMing )
+	result = is_set_flag(user, HongMing)
+	fmt.Printf("user is hongming:%t\n", result)
 }
